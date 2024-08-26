@@ -7,7 +7,7 @@ import Register from "./auth/register/Register";
 import Login from "./auth/login/Login";
 import { useEffect } from "react";
 import Scorelist from "./Pages/scorelist/Categories";
-import Categories from "./Pages/categories/categories";
+import Categories from "./Pages/categories/Categories";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");

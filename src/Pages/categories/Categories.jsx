@@ -4,7 +4,6 @@ import "./style.css"; // Make sure the path is correct
 import { Container } from "../../Components/Container/Container";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../../assets/Imges/ctf.jpg";
-import { Header } from "../../Components/Header/Header";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -28,7 +27,6 @@ const Categories = () => {
 
   return (
     <>
-    
       <Container>
         <div className="row">
           {categories.map((category) => (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Container } from "../../Components/Container/Container";
-import { Header } from "../../Components/Header/Header";
+import MatrixRainEffect from "../banner/banner";
 import { FaSearch } from "react-icons/fa";
 import "./style.css";
 
@@ -128,6 +128,7 @@ export const Scoreboard = () => {
 
   return (
     <>
+      <MatrixRainEffect />
       <section className="scoreboard">
         <Container>
           <div className="user-nav">

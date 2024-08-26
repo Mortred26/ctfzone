@@ -8,6 +8,7 @@ import Login from "./auth/login/Login";
 import { useEffect } from "react";
 import Scorelist from "./Pages/scorelist/Categories";
 import Categories from "./Pages/categories/Categories";
+import Bunner from "./Pages/banner/banner";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
@@ -32,6 +33,7 @@ function App() {
             <Route path="/challange/:id" element={<Challanges />} />
             <Route path="/challange" element={<Categories />} />
             <Route path="/scoreboard" element={<Scorelist />} />
+            <Route path="/bunner" element={<Bunner />} />
             <Route path="/scoreboard/:id" element={<Scoreboard />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

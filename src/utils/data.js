@@ -21,9 +21,10 @@ export const Sidebar = [
   },
   {
     text: "Tests",
-    link: "/tests",
+    link: "/bunner",
     img: Tests,
   },
+  
 
 
   

@@ -3,6 +3,7 @@ import { Container } from "../../Components/Container/Container";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./style.css";
+import MatrixRainEffect from "../banner/banner";
 
 const Modal = ({
   selectedTest,
@@ -215,6 +216,7 @@ export const Challanges = () => {
   return (
     <>
       <section className="challanges">
+        <MatrixRainEffect />
         <Container>
           <h2 className="chellenge-group">Ctf Challenge</h2>
           <ul className="challanges-ul">

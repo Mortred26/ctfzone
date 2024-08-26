@@ -5,6 +5,7 @@ import { Container } from "../../Components/Container/Container";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../../assets/Imges/ctf.jpg";
 import { Header } from "../../Components/Header/Header";
+import MatrixRainEffect from "../banner/banner";
 
 const Scorelist = () => {
   const [categories, setCategories] = useState([]);
@@ -28,6 +29,7 @@ const Scorelist = () => {
 
   return (
     <>
+      <MatrixRainEffect />
       <Container>
         <div className="row">
           {categories.map((category) => (

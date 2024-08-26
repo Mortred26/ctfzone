@@ -46,7 +46,7 @@
 
 .header-ul {
   display: inline-flex;
-  gap: 35px;
+  gap: 30px;
   list-style: none;
   margin-left: 124px;
 }
@@ -54,8 +54,8 @@
 .header-link {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  font-size: 28px;
+  gap: 10px;
+  font-size: 24px;
   font-weight: 500;
   position: relative;
   padding: 10px;
@@ -64,8 +64,8 @@
 }
 
 .header-img {
-  width: 43px;
-  height: 53px;
+  width: 28px;
+  height: 28px;
 }
 
 .header-link svg {

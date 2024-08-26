@@ -12,6 +12,7 @@
 .card {
   position: relative;
   height: 350px;
+  max-width: 425px;
   transition: ease all 2.3s;
   perspective: 1920px;
   cursor: pointer;

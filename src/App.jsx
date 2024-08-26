@@ -3,11 +3,11 @@ import { Header } from "./Components/Header/Header";
 import { Hero } from "./Pages/Hero/Hero";
 import { Challanges } from "./Pages/Challanges/Challanges";
 import { Scoreboard } from "./Pages/Scoreboard/Scoreboard";
-import Categories from "./Pages/categories/categories";
 import Register from "./auth/register/Register";
 import Login from "./auth/login/Login";
 import { useEffect } from "react";
 import Scorelist from "./Pages/scorelist/Categories";
+import Categories from "./Pages/categories/categories";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");

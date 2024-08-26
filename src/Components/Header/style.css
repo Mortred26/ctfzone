@@ -1,0 +1,89 @@
+:root {
+  --body-bg-color: #1a1c1d;
+  --text-color: #aaaebc;
+  --red: #e74c3c;
+}
+
+.home-body {
+  background-image: url("../../assets/Imges/homepage.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.navbtn {
+  padding: 6px 8px;
+  border: 1px solid white;
+  background-color: #1a1c1d;
+  margin-left: 40px;
+  border-radius: 4px;
+}
+
+.btn-nav {
+  fill: white;
+  width: 18px;
+  height: 18px;
+}
+
+.header {
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #1a1c1d;
+}
+
+.header .container {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  font-size: 39px;
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.header-ul {
+  display: inline-flex;
+  gap: 35px;
+  list-style: none;
+  margin-left: 124px;
+}
+
+.header-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 28px;
+  font-weight: 500;
+  position: relative;
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.header-img {
+  width: 43px;
+  height: 53px;
+}
+
+.header-link svg {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header-link svg path {
+  fill: transparent;
+  stroke-width: 2px;
+  stroke: currentColor;
+  stroke-dasharray: 89.7506103515625;
+  stroke-dashoffset: 89.7506103515625;
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.29, 0.68, 0.74, 1.02);
+}
+
+.header-link:hover svg path {
+  stroke-dashoffset: 0;
+}

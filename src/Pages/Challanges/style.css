@@ -39,8 +39,8 @@
   margin: 20px auto;
   width: 246px;
   height: 246px;
-  background: rgb(95, 15, 243);
-  border-radius: 75px;
+  background: #1abc9c;
+  border-radius: 50px;
   font-family: "Montserrat", sans-serif;
   font-size: 20px;
   font-weight: lighter;
@@ -70,7 +70,7 @@
   width: 250px;
   height: 250px;
   background: #fda8cf;
-  border-radius: 75px;
+  border-radius: 50px;
   z-index: -1;
   animation: 2s clockwise infinite;
 }

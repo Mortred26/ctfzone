@@ -47,7 +47,7 @@
   height: 100%;
   width: 100%;
   transform-style: preserve-3d;
-  transition: ease all 2.3s;
+  transition: ease all 2.5s;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -66,6 +66,7 @@
   transition: ease all 2.3s;
   transform-style: preserve-3d;
   transform: translateZ(0px);
+  border-radius: 6px;
 }
 
 .cover:after {
@@ -78,6 +79,7 @@
   z-index: 2;
   transition: ease all 1.3s;
   background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
 }
 
 .category-title {
@@ -117,6 +119,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid white;
+  border-radius: 6px;
 }
 
 .card-back a {

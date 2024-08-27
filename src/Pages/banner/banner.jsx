@@ -12,7 +12,7 @@ const MatrixRainEffect = () => {
     canvas.width = W;
     canvas.height = H;
 
-    const fontSize = 16;
+    const fontSize = 28;
     const columns = Math.floor(W / fontSize);
     const drops = [];
     for (let i = 0; i < columns; i++) {

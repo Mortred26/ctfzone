@@ -17,64 +17,22 @@ export const Scoreboard = () => {
 
   useEffect(() => {
     if (categoryId) {
-      // Kategoriyaga tegishli guruhlarni olish
       axios
         .get(
-          `https://ctfhawksbackend.onrender.com/api/categories/${categoryId}`
+          `https://ctfhawksbackend.onrender.com/api/categories/${categoryId}/users-with-scores`
         )
         .then((response) => {
-          // Olingan guruhlar asosida foydalanuvchi ma'lumotlarini olish
-          fetchUsersWithScores(response.data.groups);
+          setUsers(response.data);
+          setFilteredUsers(response.data);
+          setLoading(false);
         })
         .catch((error) => {
-          console.error("Guruhlarni olishda xatolik:", error);
+          console.error("Foydalanuvchilarni olishda xatolik:", error);
+          setError("Foydalanuvchilarni olishda xatolik yuz berdi.");
           setLoading(false);
         });
     }
   }, [categoryId]);
-
-  const fetchUsersWithScores = (groups) => {
-    axios
-      .get("https://ctfhawksbackend.onrender.com/api/users")
-      .then((response) => {
-        const usersData = response.data.map((user) => {
-          let totalCategoryScore = 0;
-          let latestCompletionTime = null;
-
-          user.groupsTaken.forEach((group) => {
-            if (groups.includes(group.groupId)) {
-              totalCategoryScore += group.totalPoints;
-
-              group.tests.forEach((test) => {
-                const testTime = new Date(test.timestamp);
-                if (!latestCompletionTime || testTime > latestCompletionTime) {
-                  latestCompletionTime = testTime;
-                }
-              });
-            }
-          });
-
-          return {
-            ...user,
-            totalCategoryScore,
-            latestCompletionTime,
-          };
-        });
-
-        const filteredUsers = usersData.filter(
-          (user) => user.totalCategoryScore > 0
-        );
-
-        setUsers(filteredUsers);
-        setFilteredUsers(filteredUsers);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Foydalanuvchilarni olishda xatolik:", error);
-        setError("Foydalanuvchilarni olishda xatolik yuz berdi.");
-        setLoading(false);
-      });
-  };
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());

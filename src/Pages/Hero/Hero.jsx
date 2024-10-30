@@ -141,7 +141,6 @@ export const Hero = () => {
 
   return (
     <>
-   
       <section className="hero" ref={bannerRef}>
         <canvas id="dotsCanvas" ref={canvasRef}></canvas>
         <Container>
@@ -158,7 +157,7 @@ export const Hero = () => {
               <div className="trigger"></div>
               <div className="trigger"></div>
             </div>
-            <Link className="hero-btn" to="/challange">
+            <Link className="hero-btn" to="/teams">
               <HiFlag /> Start mission
             </Link>
           </div>

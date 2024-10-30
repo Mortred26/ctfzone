@@ -6,9 +6,12 @@ import { Scoreboard } from "./Pages/Scoreboard/Scoreboard";
 import Register from "./auth/register/Register";
 import Login from "./auth/login/Login";
 import { useEffect } from "react";
-import Scorelist from "./Pages/scorelist/Categories";
+import Scorelist from "./Pages/scorelist/Scorelist";
 import Categories from "./Pages/categories/Categories";
 import Bunner from "./Pages/banner/banner";
+import Team from "./Pages/team/Team";
+import ScoreTeam from "./Pages/scoreboardTeam/ScoreTeam";
+import CardTeamList from "./Pages/testin/test";
 
 function App() {
   const accessToken = localStorage.getItem("accessToken");
@@ -30,11 +33,14 @@ function App() {
           <Header></Header>
           <Routes>
             <Route path="/" element={<Hero />} />
-            <Route path="/challange/:id" element={<Challanges />} />
-            <Route path="/challange" element={<Categories />} />
-            <Route path="/scoreboard" element={<Scorelist />} />
+            <Route path="/challanges/:id" element={<Challanges />} />
+            <Route path="/challange/:id" element={<Categories />} />
+            <Route path="/teams" element={<Team />} />
+            <Route path="/scoreboard" element={<ScoreTeam />} />
+            <Route path="/scoreboard/:id" element={<Scorelist />} />
             <Route path="/bunner" element={<Bunner />} />
-            <Route path="/scoreboard/:id" element={<Scoreboard />} />
+            <Route path="/test" element={<CardTeamList />} />
+            <Route path="/scoreboards/:id" element={<Scoreboard />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </>

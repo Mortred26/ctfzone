@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container } from "../../Components/Container/Container";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -30,6 +30,11 @@ const Modal = ({
     };
   }, [onClose]);
 
+  // CSS sinflarini dinamik qo'shish uchun holatni tekshirish
+  const inputClassName = responseMessage.includes("Incorrect answer")
+    ? "input-error"
+    : "";
+
   return (
     <div className="modal-overlay">
       <div className="modal-content" ref={modalRef}>
@@ -45,6 +50,7 @@ const Modal = ({
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
             required
+            className={inputClassName} // CSS klassni dinamik qo'shish
           />
           <button className="modal-sumbit" type="submit">
             Submit
@@ -77,89 +83,35 @@ const Modal = ({
 
 export const Challanges = () => {
   const { id } = useParams();
-  const [category, setCategory] = useState(null);
-  const [groups, setGroups] = useState([]);
-  const [completedTestIds, setCompletedTestIds] = useState([]); // Foydalanuvchi testlari saqlanadi
+  const [categoryData, setCategoryData] = useState(null);
+  const [completedTestIds, setCompletedTestIds] = useState([]);
   const [selectedTest, setSelectedTest] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [answer, setAnswer] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
-
+  console.log(id);
   useEffect(() => {
-    // Foydalanuvchi ma'lumotlarini email orqali qidirish
-    const fetchUserData = async () => {
-      try {
-        const userEmail = localStorage.getItem("email"); // LocalStorage dan emailni oling
-
-        const userResponse = await axios.get(
-          `https://ctfhawksbackend.onrender.com/api/users` // API endpoint
-        );
-
-        const users = userResponse.data;
-
-        // Foydalanuvchini email orqali topish
-        const currentUser = users.find((user) => user.email === userEmail);
-
-        if (currentUser) {
-          console.log("User Data:", currentUser); // Tekshiruv uchun qo'shildi
-
-          // Agar foydalanuvchida `testsTaken` yoki `groupsTaken` mavjud bo'lmasa, bo'sh massiv qo'shish
-          const testsTaken = currentUser.testsTaken || [];
-          const groupsTaken = currentUser.groupsTaken || [];
-
-          // Foydalanuvchi tomonidan ishlangan testlarni aniqlash
-          const userCompletedTestIds = [
-            ...testsTaken.map((test) => test.testId),
-            ...groupsTaken.flatMap((group) =>
-              group.tests
-                .filter((test) => test.correct)
-                .map((test) => test.testId)
-            ),
-          ];
-          setCompletedTestIds(userCompletedTestIds);
-          console.log("Completed Test IDs:", userCompletedTestIds); // Tekshiruv uchun qo'shildi
-        } else {
-          console.error("Foydalanuvchi topilmadi:", userEmail);
-        }
-      } catch (error) {
-        console.error("Foydalanuvchi ma'lumotlarini olishda xatolik:", error);
-      }
-    };
-
-    fetchUserData();
+    const userEmail = localStorage.getItem("email");
+    console.log(`User Email: ${userEmail}`);
 
     axios
-      .get(`https://ctfhawksbackend.onrender.com/api/categories/${id}`)
+      .get(
+        `https://ctfhawksbackend.onrender.com/api/categories/user-tests/${userEmail}/${id}`
+      )
       .then((response) => {
-        const categoryData = response.data;
-        setCategory(categoryData);
-
-        const groupPromises = categoryData.groups.map((groupId) =>
-          axios.get(
-            `https://ctfhawksbackend.onrender.com/api/groups/${groupId}`
-          )
-        );
-
-        Promise.all(groupPromises)
-          .then((responses) => {
-            const groupsWithTests = responses
-              .map((response) => response.data)
-              .filter((group) => group.tests && group.tests.length > 0);
-            setGroups(groupsWithTests);
-          })
-          .catch((error) => {
-            console.error("Gruppalarni olishda xatolik:", error);
-          });
+        setCategoryData(response.data.groups);
+        setCompletedTestIds(response.data.completedTestIds);
+        console.log(response.data);
       })
       .catch((error) => {
-        console.error("Kategoriyani olishda xatolik:", error);
+        console.error("Foydalanuvchi ma'lumotlarini olishda xatolik:", error);
       });
   }, [id]);
 
   const openModal = (test) => {
     if (completedTestIds.includes(test._id)) {
-      console.log("Test allaqachon bajarilgan:", test._id); // Tekshiruv uchun qo'shildi
+      console.log("Test allaqachon bajarilgan:", test._id);
       return;
     }
     setSelectedTest(test);
@@ -174,42 +126,43 @@ export const Challanges = () => {
     setAnswer("");
   };
 
-  const toggleHint = () => {
-    setShowHint((prev) => !prev);
-  };
-
-  const accessToken = localStorage.getItem("accessToken");
+  const toggleHint = () => setShowHint((prev) => !prev);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (!accessToken) {
-      setResponseMessage("Authentication error. Please log in again.");
-      return;
-    }
+    const accessToken = localStorage.getItem("accessToken");
+    const userEmail = localStorage.getItem("email");
+    console.log(`Selected Test ID: ${selectedTest._id}`);
 
     axios
       .post(
-        `https://ctfhawksbackend.onrender.com/api/tests/${selectedTest._id}`,
-        { answer },
+        `https://ctfhawksbackend.onrender.com/api/tests/${selectedTest._id}/submit`,
+        { answer: answer.trim(), userEmail },
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`, // Ensure token is correctly set
           },
         }
       )
       .then((response) => {
         if (response.data.correct) {
-          // Test muvaffaqiyatli ishlanganida test ID ni yangilash
           setCompletedTestIds((prev) => [...prev, selectedTest._id]);
-          setIsModalOpen(false);
+          setResponseMessage("Javob to'g'ri. Test muvaffaqiyatli yakunlandi.");
+          setAnswer(""); // Reset answer
+          setIsModalOpen(false); // Close the modal if correct
         } else {
-          setResponseMessage(response.data.message);
+          setResponseMessage("Noto'g'ri javob. Iltimos, qayta urinib ko'ring.");
+          // Javobni o'chirmaymiz
         }
       })
       .catch((error) => {
         console.error("Javobni yuborishda xatolik:", error);
-        setResponseMessage("Javobni yuborishda xatolik yuz berdi.");
+        if (error.response && error.response.data) {
+          setResponseMessage(error.response.data);
+        } else {
+          setResponseMessage("Javobni yuborishda xatolik yuz berdi.");
+        }
+        // Javobni o'chirmaymiz
       });
   };
 
@@ -220,37 +173,33 @@ export const Challanges = () => {
         <Container>
           <h2 className="chellenge-group">Ctf Challenge</h2>
           <ul className="challanges-ul">
-            {groups.length > 0 ? (
-              groups.map((group) => (
+            {categoryData && categoryData.length > 0 ? (
+              categoryData.map((group) => (
                 <li key={group._id} className="challanges-box2">
                   <h3>{group.name}</h3>
                   <ul className="challanges-ul">
-                    {group.tests.map((test) => {
-                      // Testni to'g'ri ishlaganligini tekshirish
-                      const isTestCompleted = completedTestIds.includes(
-                        test._id
-                      );
-                      console.log(
-                        `Test: ${test.name}, Test ID: ${test._id}, Completed: ${isTestCompleted}`
-                      ); // Tekshiruv uchun qo'shildi
-
-                      return (
-                        <li
-                          key={test._id}
-                          className={`challanges-box ${
-                            isTestCompleted ? "green-background" : ""
-                          }`}
-                          onClick={() => openModal(test)}
-                          style={{
-                            cursor: isTestCompleted ? "default" : "pointer",
-                            backgroundColor: isTestCompleted ? "#59ec59" : "",
-                          }}
-                        >
-                          <h2 className="challanges-title">{test.name}</h2>
-                          <span className="challanges-text">{test.score}</span>
-                        </li>
-                      );
-                    })}
+                    {group.tests.map((test) => (
+                      <li
+                        key={test._id}
+                        className={`challanges-box ${
+                          completedTestIds.includes(test._id)
+                            ? "green-background"
+                            : ""
+                        }`}
+                        onClick={() => openModal(test)}
+                        style={{
+                          cursor: completedTestIds.includes(test._id)
+                            ? "default"
+                            : "pointer",
+                          backgroundColor: completedTestIds.includes(test._id)
+                            ? "#59ec59"
+                            : "",
+                        }}
+                      >
+                        <h2 className="challanges-title">{test.name}</h2>
+                        <span className="challanges-text">{test.score}</span>
+                      </li>
+                    ))}
                   </ul>
                 </li>
               ))

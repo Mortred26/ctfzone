@@ -15,16 +15,10 @@ export const Sidebar = [
     img: User,
   },
   {
-    text: "Challanges",
-    link: "/challange",
-    img: Challanges,
-  },
-  {
-    text: "Tests",
-    link: "/bunner",
+    text: "Challanges ",
+    link: "/teams",
     img: Tests,
   },
-  
 
 
   

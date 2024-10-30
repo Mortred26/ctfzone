@@ -4,6 +4,11 @@
   --red: #e74c3c;
 }
 
+.section-header {
+  background-color: #1a1c1d;
+  width: 100%;
+}
+
 .home-body {
   background-image: url("../../assets/Imges/homepage.png");
   background-size: cover;
@@ -26,10 +31,8 @@
 
 .header {
   padding: 20px 0;
-  position: sticky;
+  position: static;
   top: 0;
-  z-index: 100;
-  background-color: #1a1c1d;
 }
 
 .header .container {

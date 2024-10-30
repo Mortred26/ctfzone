@@ -2,67 +2,46 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./style.css"; // Make sure the path is correct
 import { Container } from "../../Components/Container/Container";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import backgroundImage from "../../assets/Imges/ctf.jpg";
 import MatrixRainEffect from "../banner/banner";
+
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const [groups, setGroups] = useState([]);
-  const [Tests, setTests] = useState([]);
-  const [totalscore, SetTotalScrore] = useState("");
+  const [totalScores, setTotalScores] = useState({});
   const navigate = useNavigate();
+  const { id } = useParams(); // Retrieve team ID from URL parameters
 
   useEffect(() => {
-    // Fetch the categories from the API
+    // Fetch categories related to the specific team ID
     axios
-      .get("https://ctfhawksbackend.onrender.com/api/categories")
+      .get(`https://ctfhawksbackend.onrender.com/api/categories/team/${id}`)
       .then((response) => {
         setCategories(response.data);
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);
       });
-  }, []);
+  }, [id]); // Dependency on `id` to refetch when the team ID changes
 
-  useEffect(() => {
-    // Fetch the groups from the API
+  const fetchTotalScore = (categoryId) => {
     axios
-      .get("https://ctfhawksbackend.onrender.com/api/groups")
+      .get(
+        `https://ctfhawksbackend.onrender.com/api/categories/${categoryId}/total-score`
+      )
       .then((response) => {
-        setGroups(response.data);
+        setTotalScores((prevScores) => ({
+          ...prevScores,
+          [categoryId]: response.data.totalScore,
+        }));
       })
       .catch((error) => {
-        console.error("Error fetching groups:", error);
+        console.error("Error fetching total score:", error);
       });
-  }, []);
-
-  useEffect(() => {
-    // Fetch the tests from the API
-    axios
-      .get("https://ctfhawksbackend.onrender.com/api/tests")
-      .then((response) => {
-        setTests(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching tests:", error);
-      });
-  }, []);
-
-  const findtotal = (id) => {
-    const categoryGroups = groups.filter((group) => group.category === id);
-    let totalScore = 0;
-
-    categoryGroups.forEach((group) => {
-      const groupTests = Tests.filter((test) => test.group === group._id);
-      const groupScore = groupTests.reduce((sum, test) => sum + test.score, 0);
-      totalScore += groupScore;
-    });
-
-    SetTotalScrore(totalScore);
   };
 
   const handleCategoryClick = (categoryId) => {
-    navigate(`/challange/${categoryId}`);
+    navigate(`/challanges/${categoryId}`);
   };
 
   return (
@@ -75,7 +54,7 @@ const Categories = () => {
               className="category-main"
               key={category._id}
               onClick={() => handleCategoryClick(category._id)}
-              onMouseEnter={() => findtotal(category._id)} // Kursor olib borilganda chaqiriladi
+              onMouseEnter={() => fetchTotalScore(category._id)} // Fetch total score on hover
               style={{ cursor: "pointer" }}
             >
               <div className="card">
@@ -84,10 +63,14 @@ const Categories = () => {
                   style={{ backgroundImage: `url(${backgroundImage})` }}
                 >
                   <h1 className="category-title">{category.name}</h1>
-                  <span className="price">{category.score}</span>
+
                   <div className="card-back">
                     <a href="#">{category.name}</a>
-                    <a href="#">{totalscore}</a>
+                    <a href="#">
+                      {totalScores[category._id] !== undefined
+                        ? totalScores[category._id]
+                        : ""}
+                    </a>
                   </div>
                 </div>
               </div>

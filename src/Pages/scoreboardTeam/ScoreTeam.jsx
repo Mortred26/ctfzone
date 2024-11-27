@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./style.css"; // Make sure the path is correct
 import MatrixRainEffect from "../banner/banner"; // Assuming you still need this component
 import { Container } from "../../Components/Container/Container";
+// import score from "../../assets/Imges/score";
 
 const CardTeam = ({ imageSrc, title, totalScore, onClick }) => {
   return (
@@ -53,7 +54,7 @@ const ScoreTeam = () => {
           {team.map((teamItem) => (
             <CardTeam
               key={teamItem._id}
-              imageSrc="/public/images/score.jpg"
+              imageSrc={"/images/score.jpg"}
               title={teamItem.name}
               totalScore={totalScores[teamItem._id]}
               onClick={() => handleTeamClick(teamItem._id)}

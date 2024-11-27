@@ -53,7 +53,7 @@ const Team = () => {
           {team.map((teamItem) => (
             <CardTeam
               key={teamItem._id}
-              imageSrc="/public/images/team.jpg"
+              imageSrc="/images/team.jpg"
               title={teamItem.name}
               totalScore={totalScores[teamItem._id]}
               onClick={() => handleTeamClick(teamItem._id)}

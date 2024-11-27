@@ -53,7 +53,7 @@ const Team = () => {
           {team.map((teamItem) => (
             <CardTeam
               key={teamItem._id}
-              imageSrc="/src/assets/Imges/team.jpg" // Replace with actual team image if available
+              imageSrc="/assets/Imges/team.jpg"
               title={teamItem.name}
               totalScore={totalScores[teamItem._id]}
               onClick={() => handleTeamClick(teamItem._id)}

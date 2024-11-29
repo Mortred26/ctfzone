@@ -144,6 +144,21 @@ input[type="submit"]:active {
   opacity: 0.6;
 }
 
+.update-window {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  width: 400px;
+  padding: 40px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border-radius: 8px;
+  color: black;
+}
+/* end modal */
 @media (max-width: 900px) {
   .section1 span {
     width: calc(10vw - 2px);
@@ -190,4 +205,195 @@ input[type="submit"]:active {
   color: white;
   background-color: blue;
   font-size: 14px;
+}
+
+/* loading */
+.loader {
+  margin: 0 auto;
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid #0000;
+  border-right-color: #ffa50097;
+  position: relative;
+  animation: l24 1s infinite linear;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: inherit;
+  animation: inherit;
+  animation-duration: 2s;
+}
+.loader:after {
+  animation-duration: 4s;
+}
+@keyframes l24 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+/* loading end */
+
+/* Modal uchun asosiy animatsiya */
+@keyframes bounce {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes scale {
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+    left: 25%;
+  }
+  50% {
+    left: 60%;
+    transform: rotate(168deg);
+  }
+  100% {
+    transform: rotate(0deg);
+    left: 25%;
+  }
+}
+
+@keyframes move {
+  0% {
+    left: 25%;
+  }
+  50% {
+    left: 60%;
+  }
+  100% {
+    left: 25%;
+  }
+}
+
+/* Modalni ekranning to'liq o'qlariga joylashtirish */
+.alert-main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  animation: scale 0.5s ease-in-out;
+}
+
+/* Modal ichidagi konteyner */
+.alert-container {
+  position: relative;
+  background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%);
+  padding: 20px;
+  padding-top: 120px;
+  border-radius: 20px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  animation: bounce 1s ease infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Yuz (face2) animatsiyasi */
+.face2 {
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 80px;
+  margin: 20px auto; /* Markazlash uchun */
+  background: #fcfcfc;
+  border: 3px solid #777;
+  border-radius: 50%;
+  animation: roll 3s ease-in-out infinite;
+}
+
+/* Ko'zlar */
+.face2 .eye {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #777;
+  border-radius: 50%;
+  top: 30%;
+}
+
+.face2 .eye.left {
+  left: 20%; /* Chap ko'z */
+}
+
+.face2 .eye.right {
+  right: 20%; /* O‘ng ko‘z */
+}
+
+/* Og'iz */
+.face2 .mouth {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  border: 2px solid;
+  border-color: #777 transparent transparent #777;
+  transform: rotate(45deg);
+}
+
+/* Modal text va tugma styling */
+.alert-container h2 {
+  font-size: 22px;
+  font-weight: 100;
+  padding-top: 5px;
+  color: #fcfcfc;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 5px;
+}
+
+.alert-container button {
+  margin-top: 20px;
+  background: #fcfcfc;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+  font-size: 16px;
+  color: #ef8d9c;
+  font-weight: bold;
+}
+
+.alert-container button:hover {
+  transform: scale(1.1);
+  background: #ffc39e;
+}
+
+/* Yuz (face2) va modal markazlash */
+.alert-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
 }

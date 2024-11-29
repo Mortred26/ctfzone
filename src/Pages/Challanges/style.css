@@ -199,31 +199,59 @@
   z-index: 1000;
 }
 
-.modal-content {
-  background-color: rgb(51, 51, 51, 0.8);
+.modal-contents {
+  background-color: rgba(37, 58, 58, 0.8);
   padding: 40px;
   border-radius: 8px;
   width: 100%;
-  max-width: 540px;
+  max-width: 500px;
 }
 
-.modal-content h3 {
+.sumbit-main {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.modal-contents h3 {
   margin-bottom: 20px;
-  color: #fefefe;
+  color: #ffff;
   font-size: 26px;
   text-align: center;
 }
 
-.modal-content p {
+.modalftext {
+  color: #ffff;
   font-size: 20px;
   margin-bottom: 15px;
 }
 
-.modal-question {
+.modalstext {
   color: rgb(50, 14, 255);
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 15px;
 }
 
-.modal-content form {
+.response-message {
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.correct {
+  background-color: #d4edda; /* Yashil fon */
+  color: #155724; /* Yashil matn */
+}
+
+.incorrect {
+  background-color: #f8d7da; /* Qizil fon */
+  color: #721c24; /* Qizil matn */
+}
+
+.modal-contents form {
   display: flex;
   flex-direction: column;
   align-items: end;
@@ -231,15 +259,22 @@
   width: 100%;
 }
 
-.modal-content input {
+.modal-contents input {
   display: block;
   padding: 10px;
   font-size: 1rem;
   max-width: 540px;
   width: 100%;
+  border: 1px solid #0ab4b4;
+  color: white;
+  background-color: rgba(37, 58, 58, 0.8);
 }
 
-.modal-content button {
+.modal-contents input {
+  outline: none;
+}
+
+.modal-contents button {
   padding: 10px 20px;
   font-size: 1rem;
   border: none;
@@ -254,12 +289,12 @@
   margin: 20px 0;
 }
 
-.modal-content button:hover {
+.modal-contents button:hover {
   background-color: rgb(60, 10, 153);
 }
 
 .exit-button:hover,
-.modal-content button:hover {
+.modal-contents button:hover {
   background-color: #555;
 }
 
@@ -326,4 +361,36 @@
 
 .exit-button:hover {
   background-color: darkred;
+}
+
+/* loading */
+.challenge-main .loader-challenge {
+  background-color: red;
+}
+
+.challenge-button {
+  background-color: rgb(95, 15, 243);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.loader-challenge {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 40px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #ffa516 94%, #0000) top/8px 8px
+      no-repeat,
+    conic-gradient(#0000 30%, #ffa516);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
+}
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
